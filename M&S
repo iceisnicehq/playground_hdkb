@@ -1,5 +1,9 @@
 <!doctype html>
  <html>
+  <style>
+  body { background-color:black;
+ } 
+  </style>
   <title>Movies&Series</title>
   <body>
    <ol> Movies
