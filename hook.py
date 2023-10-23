@@ -20,11 +20,14 @@ def shellSort(array): #сортировка Шелла
         for i in range(interval, n):
             temp = array[i]
             j = i
+            
             while j >= interval and array[j - interval] > temp:
                 comparison_count += 1
                 array[j] = array[j - interval]
-                # swap_count += 1
+                swap_count += 1
                 j -= interval
+            if (j >= interval and array[j - interval] > temp) == False:
+                comparison_count += 1
             array[j] = temp
             # swap_count += 1
         k -= 1
@@ -58,9 +61,11 @@ def mycomb(arr):
             
             if arr[i]>arr[i+gap]:
                 comparison_count += 1
-                # swap_count += 1
+                swap_count += 1
                 arr[i], arr[i+gap] = arr[i+gap], arr[i]
                 swap = True
+            elif (arr[i]>arr[i+gap]) == False:
+                comparison_count += 1
     if MATRIX == True:
         matrix_swap += swap_count
         matrix_comp += comparison_count
@@ -83,8 +88,7 @@ with open("arr1.txt", "r") as shell, open("arr2.txt", "r") as comb:
     union = list(sarsh.union(sarco))
     sh_co = list(sarsh.intersection(sarco))
     diff = list(sarsh.difference(sarco))
-    sym_diff = list(sarsh.symmetric_difference(sarco))
-    
+    sym_diff = list(sarsh.symmetric_difference(sarco)) 
     with open("union.txt", "w+") as f_union, open("inters.txt", "w+") as f_inters, open("diff.txt", "w+") as f_diff, open("symdiff.txt", "w+") as f_symdiff:
         for i in range(len(union)):
             if i == len(union)-1:
