@@ -20,10 +20,10 @@ def shellSort(array): #сортировка Шелла
         for i in range(interval, n):
             temp = array[i]
             j = i
-            comparison_count += 1
             while j >= interval and array[j - interval] > temp:
+                comparison_count += 1
                 array[j] = array[j - interval]
-                swap_count += 1
+                # swap_count += 1
                 j -= interval
             array[j] = temp
             # swap_count += 1
@@ -55,9 +55,10 @@ def mycomb(arr):
         gap = int(gap/1.3)
         swap = False
         for i in range(len(arr)-gap):
-            comparison_count += 1
+            
             if arr[i]>arr[i+gap]:
-                swap_count += 1
+                comparison_count += 1
+                # swap_count += 1
                 arr[i], arr[i+gap] = arr[i+gap], arr[i]
                 swap = True
     if MATRIX == True:
