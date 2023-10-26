@@ -3,6 +3,25 @@ import random
 
 matrix_comp, matrix_swap = 0, 0
 
+def fbi_open_up(crime):
+    start_time = time.time()
+    with open(f"{crime}.txt", "r") as crack:
+        array = crack.read().split('\n')
+    end_time = time.time() - start_time
+    return array, end_time
+    
+    
+def writer(array, name):
+    start_time = time.time()
+    with open(f"{name}.txt", "w+") as file:
+        for i in range(len(array)):
+                if i == len(array)-1:
+                    file.write(str(array[i]))
+                else:
+                    file.write(str(array[i])+'\n')
+    end_time = time.time() - start_time
+    return end_time
+        
 def shellSort(array): #сортировка Шелла
     global matrix_swap # для матрицы
     global matrix_comp
@@ -20,13 +39,12 @@ def shellSort(array): #сортировка Шелла
         for i in range(interval, n):
             temp = array[i]
             j = i
-            
             while j >= interval and array[j - interval] > temp:
                 comparison_count += 1
                 array[j] = array[j - interval]
                 swap_count += 1
                 j -= interval
-            if (j >= interval and array[j - interval] > temp) == False:
+            if (array[j - interval] > temp) == False:
                 comparison_count += 1
             array[j] = temp
             # swap_count += 1
@@ -39,7 +57,10 @@ def shellSort(array): #сортировка Шелла
         print("--- %s seconds ---" % (time.time() - start_time))
         print("comparisons = ", comparison_count)
         print("swaps = ", swap_count)
-    return array
+    if MATRIX == True:
+        return array
+    else:
+        return array, (time.time() - start_time)
 
 def mycomb(arr):
     global matrix_swap
@@ -61,10 +82,10 @@ def mycomb(arr):
             
             if arr[i]>arr[i+gap]:
                 comparison_count += 1
-                swap_count += 1
                 arr[i], arr[i+gap] = arr[i+gap], arr[i]
+                swap_count += 1
                 swap = True
-            elif (arr[i]>arr[i+gap]) == False:
+            if (arr[i]>arr[i+gap]) == False:
                 comparison_count += 1
     if MATRIX == True:
         matrix_swap += swap_count
@@ -73,7 +94,10 @@ def mycomb(arr):
         print("--- %s seconds ---" % (time.time() - start_time))
         print("comparisons = ", comparison_count)
         print("swaps = ", swap_count)
-    return arr
+    if MATRIX == True:
+        return arr
+    elif MATRIX != True:
+        return arr, (time.time() - start_time)
 
 
 arsh, arco = [], []
@@ -81,118 +105,84 @@ arsh, arco = [], []
             # CHAPTER 1. THE CREATION OF SETS 
 MATRIX = False
 
-with open("arr1.txt", "r") as shell, open("arr2.txt", "r") as comb:
-    arsh, arco = shell.read().split('\n'), comb.read().split('\n')
-    sarsh, sarco = set(arsh), set(arco)
-    
-    union = list(sarsh.union(sarco))
-    sh_co = list(sarsh.intersection(sarco))
-    diff = list(sarsh.difference(sarco))
-    sym_diff = list(sarsh.symmetric_difference(sarco)) 
-    with open("union.txt", "w+") as f_union, open("inters.txt", "w+") as f_inters, open("diff.txt", "w+") as f_diff, open("symdiff.txt", "w+") as f_symdiff:
-        for i in range(len(union)):
-            if i == len(union)-1:
-                f_union.write(str(union[i]))
-            else:
-                f_union.write(str(union[i])+'\n')
-        for i in range(len(sh_co)):
-            if i == len(sh_co)-1:
-                f_inters.write(str(sh_co[i]))
-            else:
-                f_inters.write(str(sh_co[i])+'\n')
-        for i in range(len(diff)):
-            if i == len(diff)-1:
-                f_diff.write(str(diff[i]))
-            else:
-                f_diff.write(str(diff[i])+'\n')
-        for i in range(len(sym_diff)):
-            if i == len(sym_diff)-1:
-                f_symdiff.write(str(sym_diff[i]))
-            else:
-                f_symdiff.write(str(sym_diff[i])+'\n')
+arsh, time_trash = fbi_open_up('arr1')
+arco, time_trash = fbi_open_up('arr2')
+sarsh, sarco = set(arsh), set(arco)
+
+union = list(sarsh.union(sarco))
+sh_co = list(sarsh.intersection(sarco))
+diff = list(sarsh.difference(sarco))
+sym_diff = list(sarsh.symmetric_difference(sarco)) 
+writer(union, "union")
+writer(sh_co, "inters")
+writer(diff, "diff")
+writer(sym_diff, "symdiff")
 
 # CHAPTER 2. SORTING OF SETS
 
-with open("union.txt", "r") as f_union, open("inters.txt", "r") as f_inters, open("diff.txt", "r") as f_diff, open("symdiff.txt", "r") as f_symdiff:
-    union, inters, diff, sym_diff = f_union.read().split('\n'), f_inters.read().split('\n'), f_diff.read().split('\n'), f_symdiff.read().split('\n')
-    
-    shell_union, comb_union = union, union
-    shell_inters, comb_inters = inters, inters
-    shell_diff, comb_diff =  diff, diff
-    shell_symdiff, comb_symdiff = sym_diff, sym_diff
-    
-    # oh yeah, it's Shell time
-    print("____________________SHELL____________________")
-    print('\n'+"shell union:")
-    shell_union = shellSort(shell_union)
-    print('\n'+"shell inters:")
-    shell_inters = shellSort(shell_inters)
-    print('\n'+"shell diff:")
-    shell_diff = shellSort(shell_diff)
-    print('\n'+"shell symdiff:")
-    shell_symdiff = shellSort(shell_symdiff)
-    
-    with open("shell_union.txt", "w+") as fshell_union, open("shell_inters.txt", "w+") as fshell_inters, open("shell_diff.txt", "w+") as fshell_diff, open("shell_symdiff.txt", "w+") as fshell_symdiff:
-        for i in range(len(shell_union)):
-            if i == len(shell_union)-1:
-                fshell_union.write(str(shell_union[i]))
-            else:
-                fshell_union.write(str(shell_union[i])+'\n')
-        for i in range(len(shell_inters)):
-            if i == len(shell_inters)-1:
-                fshell_inters.write(str(shell_inters[i]))
-            else:
-                fshell_inters.write(str(shell_inters[i])+'\n')
-        for i in range(len(shell_diff)):
-            if i == len(shell_diff)-1:
-                fshell_diff.write(str(shell_diff[i]))
-            else:
-                fshell_diff.write(str(shell_diff[i])+'\n')
-        for i in range(len(shell_symdiff)):
-            if i == len(shell_symdiff)-1:
-                fshell_symdiff.write(str(shell_symdiff[i]))
-            else:
-                fshell_symdiff.write(str(shell_symdiff[i])+'\n')
-    print("____________________SHELL_END____________________\n")
-    
-    # grab a comb and brush my head 
-    print("____________________COMB____________________")           
-    print('\n'+"comb union:")
-    comb_union = mycomb(comb_union)
-    print('\n'+"comb inters:")
-    comb_inters = mycomb(comb_inters)
-    print('\n'+"comb diff:")
-    comb_diff = mycomb(comb_diff)
-    print('\n'+"comb symdiff:")
-    comb_symdiff = mycomb(comb_symdiff)
-    print("____________________COMB_END____________________\n") 
-    with open("comb_union.txt", "w+") as fcomb_union, open("comb_inters.txt", "w+") as fcomb_inters, open("comb_diff.txt", "w+") as fcomb_diff, open("comb_symdiff.txt", "w+") as fcomb_symdiff:
-        for i in range(len(comb_union)):
-            if i == len(comb_union)-1:
-                fcomb_union.write(str(comb_union[i]))
-            else:
-                fcomb_union.write(str(comb_union[i])+'\n')
-        for i in range(len(comb_inters)):
-            if i == len(comb_inters)-1:
-                fcomb_inters.write(str(comb_inters[i]))
-            else:
-                fcomb_inters.write(str(comb_inters[i])+'\n')
-        for i in range(len(comb_diff)):
-            if i == len(comb_diff)-1:
-                fcomb_diff.write(str(comb_diff[i]))
-            else:
-                fcomb_diff.write(str(comb_diff[i])+'\n')
-        for i in range(len(comb_symdiff)):
-            if i == len(comb_symdiff)-1:
-                fcomb_symdiff.write(str(comb_symdiff[i]))
-            else:
-                fcomb_symdiff.write(str(comb_symdiff[i])+'\n')
+shell_union, time_shell_u = comb_union, time_comb_u = fbi_open_up('union')
+shell_inters, time_shell_i = comb_inters, time_comb_i = fbi_open_up('inters')
+shell_diff, time_shell_d = comb_diff, time_comb_d = fbi_open_up('diff')
+shell_symdiff, time_shell_s = comb_symdiff, time_comb_s = fbi_open_up('symdiff')
 
-        #CHAPTER 3. THE ARRAY ENTERS THE GAME 
+    # oh yeah, it's Shell time
+print("____________________SHELL____________________")
+print('\n'+"shell union:")
+shell_union, shell_u_time = shellSort(shell_union)
+write_time = writer(shell_union, "shell_union")
+total_time = time_shell_u + shell_u_time + write_time
+print("--- %s seconds ---" % total_time)
+
+print('\n'+"shell inters:")
+shell_inters, shell_i_time = shellSort(shell_inters)
+write_time = writer(shell_inters, "shell_inters")
+total_time = time_shell_i + shell_i_time + write_time
+print("--- %s seconds ---" % total_time)
+
+print('\n'+"shell diff:")
+shell_diff, shell_d_time = shellSort(shell_diff)
+write_time = writer(shell_diff, "shell_diff")
+total_time = time_shell_u + shell_d_time + write_time
+print("--- %s seconds ---" % total_time)
+
+print('\n'+"shell symdiff:")
+shell_symdiff, shell_s_time = shellSort(shell_diff)
+write_time = writer(shell_symdiff, "shell_symdiff")
+total_time = time_shell_s + shell_s_time + write_time
+print("--- %s seconds ---" % total_time)
+
+    # grab a comb and brush my head 
+print("____________________COMB____________________")           
+print('\n'+"comb union:") 
+comb_union, comb_u_time = mycomb(comb_union)
+write_time = writer(comb_union, "comb_union")
+total_time = time_comb_u + comb_u_time + write_time
+print("--- %s seconds ---" % total_time)
+
+print('\n'+"comb inters:")
+comb_inters, comb_i_time = mycomb(comb_inters)
+write_time = writer(comb_inters, "comb_inters")
+total_time = time_comb_i + comb_i_time + write_time
+print("--- %s seconds ---" % total_time)
+
+print('\n'+"comb diff:")
+comb_diff, comb_d_time = mycomb(comb_diff)
+write_time = writer(comb_diff, "comb_diff")
+total_time = time_comb_u + comb_d_time + write_time
+print("--- %s seconds ---" % total_time)
+
+print('\n'+"comb symdiff:")
+comb_symdiff, comb_s_time = mycomb(comb_diff)
+write_time = writer(comb_symdiff, "comb_symdiff")
+total_time = time_comb_s + comb_s_time + write_time
+print("--- %s seconds ---" % total_time)
+
+print("____________________COMB_END____________________\n") 
+
 print("____________________ARRAY____________________") 
 array1 = []
 value = random.randint(-10, 10) #число для генерации +-value
-for j in range(2501):
+for j in range(6969):
     sign = random.randint(-100, 100)
     if sign < 0:
         array1.append((-value))
@@ -200,7 +190,7 @@ for j in range(2501):
         array1.append((value))
     value += random.randint(-50, 50) #шаг чисел
 array2 = []
-for i in range(2501):
+for i in range(6660):
     sign = random.randint(-100, 100)
     if sign < 0:
         array2.append((-value))
@@ -208,16 +198,16 @@ for i in range(2501):
         array2.append((value))
     value += random.randint(-50, 50) #шаг чисел
 print("\nARRAY1(SHELL)")
-array1 = shellSort(array1)
+array1, trash_time = shellSort(array1)
 print("\nARRAY2(COMB)")
-array2 = mycomb(array2)
+array2, trash_time = mycomb(array2)
 
 array = set(array1).union(set(array2))
 array_comb = list(array)
 array_shell = list(array)
-print('\n'+"shell 3.2.2:")
+print('\n'+"shell 3.2.2 (USS arr):")
 shellSort(array_shell)
-print('\n'+"Comb 3.2.2:")
+print('\n'+"Comb 3.2.2 (USS arr):")
 mycomb(array_comb)
 print("____________________ARRAY_END____________________\n") 
 
@@ -237,10 +227,10 @@ for i in range(n):
             b.append((-value))
         else:
             b.append((value))
-        value += random.randint(-50, 50) #шаг чисел
+        value += random.randint(6, 66) #шаг чисел
     a.append(b)
     b = []
-a_shell, a_comb = a, a
+a_shell = a_comb = a
 
 matrix_shell_start_time = time.time()
 while True: # shell
@@ -253,16 +243,16 @@ while True: # shell
     a_shell = [list(i) for i in zip(*a_shell)] #обратное транспонирование
     if a_shell == a_shell_source: #проверка
         break
-
-
 print("\n"+"-MATRIX(SHELL)-- %s seconds ---" % (time.time() - matrix_shell_start_time))
 print("MATRIX SWAPS " + str(matrix_swap))
 print("MATRIX COMPS " + str(matrix_comp))
 
+matrix_comp, matrix_swap = 0, 0
+
 matrix_comb_start_time = time.time()
 while True: # comb
     a_comb_source = a_comb #изначальный массив
-    for i in range(len(a_comb)): #сортировка строчек
+    for j in range(len(a_comb)): #сортировка строчек
         a_comb[i] = mycomb(a_comb[i])
     a_comb = [list(i) for i in zip(*a_comb)] #транспонирование
     for i in range(len(a_comb)): #сортировка столбцов
@@ -274,8 +264,4 @@ while True: # comb
 print("\n"+"-MATRIX(COMB)-- %s seconds ---" % (time.time() - matrix_comb_start_time))
 print("MATRIX SWAPS " + str(matrix_swap))
 print("MATRIX COMPS " + str(matrix_comp))
-
-# print('\n-----SORTED MATRIX GO BRRR-----\n')
-# for i in a:
-#     print(i)
 print("____________________THE MATRIX_END____________________") 
