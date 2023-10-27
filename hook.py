@@ -23,13 +23,11 @@ def writer(array, name):
     return end_time
         
 def shellSort(array): #сортировка Шелла
-    global matrix_swap # для матрицы
-    global matrix_comp
+    start_time = time.time() #начало отсчёта
     try:
         array = [int(i) for i in array] 
     except ValueError:
         pass
-    start_time = time.time() #начало отсчёта
     comparison_count = 0 
     swap_count = 0
     n = len(array)
@@ -57,6 +55,8 @@ def shellSort(array): #сортировка Шелла
         print("comparisons = ", comparison_count)
         print("swaps = ", swap_count)
     if MATRIX == True:
+        global matrix_swap
+        global matrix_comp
         matrix_swap += swap_count
         matrix_comp += comparison_count
         return array
@@ -64,13 +64,11 @@ def shellSort(array): #сортировка Шелла
         return array, (time.time() - start_time)
 
 def mycomb(arr):
-    global matrix_swap
-    global matrix_comp
+    start_time = time.time()
     try:
         arr = [int(i) for i in arr]
     except ValueError:
         pass
-    start_time = time.time()
     comparison_count = 0 
     swap_count = 0
     gap = int(len(arr))
@@ -94,6 +92,8 @@ def mycomb(arr):
         print("comparisons = ", comparison_count)
         print("swaps = ", swap_count)
     if MATRIX == True:
+        global matrix_swap
+        global matrix_comp
         matrix_swap += swap_count
         matrix_comp += comparison_count
         return arr
@@ -178,7 +178,7 @@ total_time = time_shell_u + shell_d_time + write_time
 print("--- %s seconds ---" % total_time)
 
 print('\n'+"shell symdiff:")
-shell_symdiff, shell_s_time = shellSort(shell_diff)
+shell_symdiff, shell_s_time = shellSort(shell_symdiff)
 write_time = writer(shell_symdiff, "shell_symdiff")
 total_time = time_shell_s + shell_s_time + write_time
 print("--- %s seconds ---" % total_time)
@@ -295,10 +295,11 @@ for i in range(80085):
     else:
         array2.append((value))
     value += random.randint(-50, 50) #шаг чисел
-print("\nARRAY1(SHELL)")
-array1, trash_time = shellSort(array1)
-print("\nARRAY2(COMB)")
-array2, trash_time = mycomb(array2)
+array1, array2 = sorted(array1), sorted(array2)
+# print("\nARRAY1(SHELL)")
+# array1, trash_time = shellSort(array1)
+# print("\nARRAY2(COMB)")
+# array2, trash_time = mycomb(array2)
 
 array = set(array1).union(set(array2))
 array_comb = list(array)
@@ -369,3 +370,11 @@ print("MATRIX COMPS " + str(matrix_comp))
 # for i in a:
 #     print(i)
 print("____________________THE MATRIX_END____________________") 
+
+# print('TEST')
+# test = [random.randint(-1000000, 1000000) for i in range(1000000)]
+# start_time = time.time()
+
+# shellSort(test)
+# print("-MATRIX(TEST)-- %s seconds ---" % (time.time() - start_time))
+MATRIX = False
