@@ -369,11 +369,3 @@ print("MATRIX COMPS " + str(matrix_comp))
 # for i in a:
 #     print(i)
 print("____________________THE MATRIX_END____________________") 
-
-# print('TEST')
-# test = [random.randint(-1000000, 1000000) for i in range(1000000)]
-# start_time = time.time()
-
-# shellSort(test)
-# print("-MATRIX(TEST)-- %s seconds ---" % (time.time() - start_time))
-MATRIX = False
