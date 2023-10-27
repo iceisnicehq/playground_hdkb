@@ -44,7 +44,10 @@ def shellSort(array): #сортировка Шелла
                 array[j] = array[j - interval]
                 swap_count += 1
                 j -= interval
-            comparison_count += 1
+            if (j >= interval) == False:
+                pass
+            elif (array[j - interval] > temp) == False:
+                comparison_count += 1
             array[j] = temp
             # swap_count += 1
         k -= 1
@@ -277,7 +280,7 @@ print("____________________COMB_END____________________\n")
 print("____________________ARRAY____________________") 
 array1 = []
 value = random.randint(-10, 10) #число для генерации +-value
-for j in range(6969):
+for j in range(69420):
     sign = random.randint(-100, 100)
     if sign < 0:
         array1.append((-value))
@@ -285,7 +288,7 @@ for j in range(6969):
         array1.append((value))
     value += random.randint(-50, 50) #шаг чисел
 array2 = []
-for i in range(6660):
+for i in range(80085):
     sign = random.randint(-100, 100)
     if sign < 0:
         array2.append((-value))
@@ -373,3 +376,4 @@ print("____________________THE MATRIX_END____________________")
 
 # shellSort(test)
 # print("-MATRIX(TEST)-- %s seconds ---" % (time.time() - start_time))
+MATRIX = False
