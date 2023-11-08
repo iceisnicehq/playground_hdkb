@@ -1,4 +1,4 @@
-z = 1400000.0
+z = 1400000.0 #zavesa
 c = 0
 a = float(input("a = "))
 k = float(input("k = "))
