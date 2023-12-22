@@ -42,7 +42,7 @@ echo -n "${adminPassword}" | pbcopy
 read -p "Is everything correct? (y/n or just press Enter for yes): " -r
 
 # Check the response: proceed if user input is y, Y, or Enter (empty response)
-if [[ $REPLY =~ ^[Yy]$ ]] || [[ -z $REPLY ]]; then
+if [[ $REPLY =~ ^([Yy][Ee][Ss]|[Yy])$ ]] || [[ -z $REPLY ]]; then
     # User confirmed the input, or just pressed Enter; continue the script
     echo "Input confirmed. Continuing..."
 else
@@ -80,7 +80,7 @@ open yandex-certget-manual-0.4_Signed.pkg
 read -p "Is certificate installed? (y/n or just press Enter for yes): " -r
 
 # Check the response: proceed if user input is y, Y, or Enter (empty response)
-if [[ \$REPLY =~ ^[Yy]$ ]] || [[ -z \$REPLY ]]; then
+if [[ \$REPLY =~ ^([Yy][Ee][Ss]|[Yy])$ ]] || [[ -z \$REPLY ]]; then 
     # User confirmed the input, or just pressed Enter; continue the script
     echo "certficicate installed. Continuing..."
 else
@@ -119,11 +119,11 @@ fi
 read -p "Do you want to reboot? (y/n) " -r
 echo    # move to a new line
 # Check the response: proceed if user input is y, Y, or Enter (empty response)
-if [[ \$REPLY =~ ^[Yy]$ ]] || [[ -z \$REPLY ]]; then
+if [[ \$REPLY =~ ^([Yy][Ee][Ss]|[Yy])$ ]] || [[ -z \$REPLY ]]; then
     echo "Rebooting now."
     sudo shutdown -r now -t
 fi
 EOF
-
 chmod +x user.sh
+
 osascript -e 'tell application "System Events" to log out'
